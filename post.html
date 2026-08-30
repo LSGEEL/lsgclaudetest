@@ -6,6 +6,16 @@
   <meta name="description" content="文章详情" />
   <title>文章 · 技术笔记</title>
 
+  <link rel="icon" href="favicon.svg" type="image/svg+xml" />
+
+  <!-- 社交分享预览(标题/描述由 post.js 按文章内容动态更新) -->
+  <meta property="og:type" content="article" />
+  <meta property="og:site_name" content="技术笔记" />
+  <meta property="og:title" content="技术笔记" />
+  <meta property="og:description" content="记录技术、踩坑与思考。" />
+  <meta property="og:image" content="https://lsgeel.github.io/lsgclaudetest/assets/og-cover.png" />
+  <meta name="twitter:card" content="summary_large_image" />
+
   <!-- 提前设置主题,避免刷新闪烁 -->
   <script>
     (function () {
@@ -23,7 +33,7 @@
 <body>
   <header id="site-header" class="site-header"></header>
 
-  <main class="container">
+  <main class="container" id="main">
     <article id="article">
       <div class="article-header">
         <h1 id="post-title">加载中…</h1>

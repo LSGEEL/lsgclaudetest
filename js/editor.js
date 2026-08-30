@@ -6,8 +6,6 @@
 (function () {
   "use strict";
 
-  const PALETTE = ["#3fb950", "#58a6ff", "#d29922", "#bc8cff", "#f85149", "#8b949e"];
-  let activeColor = PALETTE[0];
   let idTouched = false; // 用户是否手动改过文件名
 
   /* ---- DOM 引用 ---- */
@@ -51,23 +49,6 @@
     }[c]));
   }
 
-  /* ---- 封面颜色选择 ---- */
-  function renderSwatches() {
-    const box = $("color-swatches");
-    box.innerHTML = PALETTE.map((c) =>
-      `<span class="swatch${c === activeColor ? " active" : ""}" data-color="${c}" style="background:${c}"></span>`
-    ).join("");
-
-    box.querySelectorAll(".swatch").forEach((s) => {
-      s.addEventListener("click", () => {
-        activeColor = s.dataset.color;
-        box.querySelectorAll(".swatch").forEach((x) => x.classList.remove("active"));
-        s.classList.add("active");
-        renderSnippet();
-      });
-    });
-  }
-
   /* ---- 实时预览 ---- */
   let previewTimer = null;
   function renderPreview() {
@@ -80,7 +61,7 @@
         return;
       }
       if (!window.marked) {
-        el.preview.innerHTML = `<p>⚠️ 无法加载 Markdown 解析器(需联网加载 CDN)。</p>`;
+        el.preview.innerHTML = `<p>无法加载 Markdown 解析器。预览需要联网从 CDN 获取 marked,请检查网络连接。</p>`;
         return;
       }
       const html = marked.parse(md);
@@ -97,7 +78,7 @@
     const id = el.id.value.trim() || "untitled";
     const tags = parseTags(el.tags.value);
     const desc = el.desc.value.trim();
-    return { title, id, date: el.date.value || today(), tags, desc, color: activeColor };
+    return { title, id, date: el.date.value || today(), tags, desc };
   }
 
   function renderSnippet() {
@@ -108,7 +89,6 @@
   date: "${p.date}",
   tags: [${p.tags.map((t) => `"${t.replace(/"/g, '\\"')}"`).join(", ")}],
   desc: "${p.desc.replace(/"/g, '\\"')}",
-  color: "${p.color}",
 },`;
     el.snippet.textContent = snippet;
   }
@@ -194,8 +174,6 @@
       ["title", "id", "tags", "desc", "content"].forEach((k) => (el[k].value = ""));
       el.date.value = today();
       idTouched = false;
-      activeColor = PALETTE[0];
-      renderSwatches();
       renderPreview();
       renderSnippet();
     });
@@ -203,7 +181,6 @@
 
   document.addEventListener("DOMContentLoaded", () => {
     el.date.value = today();
-    renderSwatches();
     renderSnippet();
     bind();
   });

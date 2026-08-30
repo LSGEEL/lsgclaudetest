@@ -43,10 +43,9 @@
     box.innerHTML = posts
       .map((p) => {
         const tags = (p.tags || []).map((t) => Blog.tagEl(t).outerHTML).join("");
-        const color = p.color || "#3fb950";
         const desc = p.desc ? `<div class="post-desc">${Blog.esc(p.desc)}</div>` : "";
         return `
-          <a class="post-card" href="post.html?id=${encodeURIComponent(p.id)}" style="--card-accent: ${color}">
+          <a class="post-card" href="post.html?id=${encodeURIComponent(p.id)}">
             <div class="post-title"><span class="prompt">&gt;</span>${Blog.esc(p.title)}<span class="ext">.md</span></div>
             <div class="post-meta">[${Blog.esc(Blog.formatDate(p.date))}] · ${Blog.esc(Blog.SITE.author)}</div>
             ${desc}

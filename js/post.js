@@ -47,8 +47,8 @@
 
     if (!post) {
       document.title = `文章不存在 · ${DEFAULT_TITLE}`;
-      document.getElementById("post-title").textContent = "文章不存在 😢";
-      contentEl.innerHTML = `<p>没有找到你要找的文章,可能链接有误或被移除了。</p>`;
+      document.getElementById("post-title").textContent = "文章不存在";
+      contentEl.innerHTML = `<p>没有找到这篇文章,可能链接有误或它已被移除。<a href="index.html">回到文章列表</a>。</p>`;
       document.getElementById("post-meta").textContent = "";
       document.getElementById("post-tags").textContent = "";
       return;
@@ -76,13 +76,20 @@
       if (rt) rt.textContent = Blog.readingTime(markdown);
     } catch (err) {
       console.error("加载文章失败:", err);
-      contentEl.innerHTML = `<p>⚠️ 文章内容加载失败,请确认 markdown 文件是否存在。</p>`;
+      contentEl.innerHTML =
+        `<p>文章内容加载失败。请确认 <code>${Blog.esc(Blog.postFile(post))}</code> 是否存在,` +
+        `并通过本地服务器(而非直接打开文件)访问。</p>`;
     }
   }
 
   document.addEventListener("DOMContentLoaded", () => {
     loadAndRender();
     const backTop = document.getElementById("back-top");
-    if (backTop) backTop.addEventListener("click", () => window.scrollTo({ top: 0, behavior: "smooth" }));
+    if (backTop) {
+      backTop.addEventListener("click", (e) => {
+        e.preventDefault();
+        window.scrollTo({ top: 0, behavior: "smooth" });
+      });
+    }
   });
 })();

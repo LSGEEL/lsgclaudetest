@@ -29,15 +29,6 @@
       return Math.max(1, Math.round(chars / 400)) + " 分钟";
     },
 
-    /** 对字符串做简单哈希,返回 0~5,用于给标签/封面分配稳定的颜色 */
-    hash(str) {
-      let h = 0;
-      for (let i = 0; i < str.length; i++) {
-        h = (h * 31 + str.charCodeAt(i)) >>> 0;
-      }
-      return h % 6;
-    },
-
     /** 文章按日期倒序 */
     sortedPosts() {
       return [...SITE.posts].sort((a, b) => (a.date < b.date ? 1 : -1));
@@ -53,7 +44,7 @@
     /** 生成一个标签元素 */
     tagEl(name) {
       const span = document.createElement("span");
-      span.className = "tag t" + Blog.hash(name);
+      span.className = "tag";
       span.textContent = name;
       return span;
     },
@@ -79,10 +70,28 @@
   /* ----------------------------------------------------------------------
    * 主题切换
    * -------------------------------------------------------------------- */
+
+  // 图标:深色模式显示「切到浅色」的太阳,浅色模式显示「切到深色」的月亮
+  const ICON_SUN =
+    '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" ' +
+    'stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="12" r="4.5"/>' +
+    '<path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2' +
+    'M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/></svg>';
+
+  const ICON_MOON =
+    '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" ' +
+    'stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">' +
+    '<path d="M20 14.5A8.5 8.5 0 1 1 9.5 4a7 7 0 0 0 10.5 10.5z"/></svg>';
+
   function applyTheme(theme) {
     document.documentElement.setAttribute("data-theme", theme);
     const btn = document.getElementById("theme-toggle");
-    if (btn) btn.textContent = theme === "dark" ? "☀️" : "🌙";
+    if (btn) {
+      const toLight = theme === "dark";
+      btn.innerHTML = toLight ? ICON_SUN : ICON_MOON;
+      btn.setAttribute("aria-label", toLight ? "切换到浅色主题" : "切换到深色主题");
+      btn.setAttribute("title", toLight ? "切换到浅色主题" : "切换到深色主题");
+    }
   }
 
   function initTheme() {
@@ -121,10 +130,11 @@
       .join("");
 
     header.innerHTML = `
+      <a class="skip-link" href="#main">跳到主要内容</a>
       <div class="header-inner">
         <a class="brand" href="index.html"><span class="prompt">${Blog.esc(SITE.logo || "$")}</span><span>${Blog.esc(SITE.title)}</span></a>
         <nav class="nav">${navLinks}</nav>
-        <button id="theme-toggle" class="theme-toggle" aria-label="切换主题">🌙</button>
+        <button id="theme-toggle" class="theme-toggle" type="button" aria-label="切换主题"></button>
       </div>`;
   }
 

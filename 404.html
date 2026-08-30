@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="页面不存在" />
+  <meta name="robots" content="noindex" />
+  <title>404 · 技术笔记</title>
+
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+
+  <!-- 提前设置主题,避免刷新闪烁 -->
+  <script>
+    (function () {
+      var t = localStorage.getItem("theme");
+      if (!t) t = window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light";
+      document.documentElement.setAttribute("data-theme", t);
+    })();
+  </script>
+
+  <link rel="stylesheet" href="/css/style.css" />
+</head>
+<body>
+  <header id="site-header" class="site-header"></header>
+
+  <main class="container" id="main">
+    <section class="notfound">
+      <p class="nf-cmd"><span class="prompt">$</span> cd <span id="nf-path">该页面</span></p>
+      <h1>404 &mdash; 页面不存在</h1>
+      <p class="nf-msg">No such file or directory.</p>
+      <p class="nf-hint">你要找的页面可能已被移动、重命名,或者从未存在过。</p>
+      <div class="nf-actions">
+        <a class="btn btn-primary" href="/">返回首页</a>
+        <a class="btn btn-ghost" href="/about.html">关于本站</a>
+      </div>
+    </section>
+  </main>
+
+  <footer id="site-footer" class="site-footer"></footer>
+
+  <script src="/js/config.js"></script>
+  <script src="/js/main.js"></script>
+  <script>
+    // 显示用户实际访问的路径,便于确认是否只是拼错了
+    document.addEventListener("DOMContentLoaded", function () {
+      var el = document.getElementById("nf-path");
+      if (el) el.textContent = location.pathname;
+    });
+  </script>
+</body>
+</html>

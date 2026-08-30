@@ -3,8 +3,10 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <meta name="description" content="写文章" />
+  <meta name="description" content="Markdown 写作页,实时预览并导出文章。" />
   <title>写文章 · 技术笔记</title>
+
+  <link rel="icon" href="favicon.svg" type="image/svg+xml" />
 
   <!-- 提前设置主题,避免刷新闪烁 -->
   <script>
@@ -21,7 +23,7 @@
 <body>
   <header id="site-header" class="site-header"></header>
 
-  <main class="container editor-page">
+  <main class="container editor-page" id="main">
     <h1>写文章</h1>
     <p class="sub">在左侧写 Markdown,右侧实时预览。写完后下载 .md 文件,并复制配置片段粘贴到 js/config.js。</p>
 
@@ -47,10 +49,6 @@
       <div class="field full">
         <label for="f-desc">摘要</label>
         <input id="f-desc" type="text" placeholder="一句话简介,显示在列表卡片上(可选)" />
-      </div>
-      <div class="field full">
-        <label>强调色(列表左侧竖条)</label>
-        <div class="color-swatches" id="color-swatches"></div>
       </div>
     </div>
 

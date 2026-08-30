@@ -37,7 +37,6 @@ window.SITE = {
    *   date   发布日期(YYYY-MM-DD)
    *   tags   标签数组,用于分类筛选
    *   desc   列表页显示的摘要(一句话)
-   *   color  列表条目左侧强调色(可选,hex,建议用语法高亮色系)
    *   file   对应的 markdown 文件路径(可选,默认 posts/{id}.md)
    */
   posts: [
@@ -47,7 +46,6 @@ window.SITE = {
       date: "2026-08-26",
       tags: ["随笔"],
       desc: "搭建这个博客的初衷,以及一些想说的话。",
-      color: "#3fb950",
     },
     {
       id: "markdown-guide",
@@ -55,7 +53,6 @@ window.SITE = {
       date: "2026-08-20",
       tags: ["教程", "技术"],
       desc: "一篇文章学会本站支持的 Markdown 语法和代码高亮。",
-      color: "#58a6ff",
     },
     {
       id: "static-blog",
@@ -63,7 +60,6 @@ window.SITE = {
       date: "2026-08-12",
       tags: ["技术", "随笔"],
       desc: "聊聊纯 HTML/CSS/JS + Markdown 构建博客的思路。",
-      color: "#d29922",
     },
   ],
 };
