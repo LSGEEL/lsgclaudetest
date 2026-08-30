@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="关于我" />
+  <title>关于 · 技术笔记</title>
+
+  <!-- 提前设置主题,避免刷新闪烁 -->
+  <script>
+    (function () {
+      var t = localStorage.getItem("theme");
+      if (!t) t = window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light";
+      document.documentElement.setAttribute("data-theme", t);
+    })();
+  </script>
+
+  <link rel="stylesheet" href="css/style.css" />
+</head>
+<body>
+  <header id="site-header" class="site-header"></header>
+
+  <main class="container">
+    <div class="about-card">
+      <p class="whoami"></p>
+      <h1 id="about-name">你的名字</h1>
+      <p class="role" id="about-tagline">记录技术、踩坑与思考</p>
+
+      <h2>关于我</h2>
+      <p>我是一名开发者,这里记录我学到的技术、踩过的坑,以及一些不成熟的思考。</p>
+
+      <h2>关于本站</h2>
+      <p>
+        这个博客用纯 HTML + CSS + JavaScript 构建,文章以 Markdown 文件存放,
+        通过 JavaScript 配置管理文章列表,可部署到 GitHub Pages / EdgeOne Pages 等静态托管服务。
+      </p>
+
+      <h2>找到我</h2>
+      <div class="social-list" id="social-list"></div>
+    </div>
+  </main>
+
+  <footer id="site-footer" class="site-footer"></footer>
+
+  <script src="js/config.js"></script>
+  <script src="js/main.js"></script>
+  <script>
+    document.addEventListener("DOMContentLoaded", function () {
+      var SITE = window.SITE || {};
+      var nameEl = document.getElementById("about-name");
+      var taglineEl = document.getElementById("about-tagline");
+      if (nameEl && SITE.author) nameEl.textContent = SITE.author;
+      if (taglineEl && SITE.tagline) taglineEl.textContent = SITE.tagline;
+
+      var list = document.getElementById("social-list");
+      if (list) {
+        list.innerHTML = (SITE.social || []).map(function (s) {
+          return '<a href="' + s.href + '" target="_blank" rel="noopener">' + s.label + "</a>";
+        }).join("");
+      }
+    });
+  </script>
+</body>
+</html>
